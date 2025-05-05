@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Animated Like Button</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <button id="likeButton">👍 Like</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
+#likeButton {
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  border: none;
+  background-color: #eee;
+  color: #333;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#likeButton.liked {
+  background-color: #ff4081;
+  color: white;
+  transform: scale(1.1);
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.2); }
+  100% { transform: scale(1.1); }
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const likeButton = document.getElementById("likeButton");
+
+  // Check localStorage for saved state
+  const isLiked = localStorage.getItem("liked") === "true";
+  if (isLiked) {
+    likeButton.classList.add("liked");
+    likeButton.textContent = "💖 Liked";
+  }
+
+  likeButton.addEventListener("click", () => {
+    const liked = likeButton.classList.toggle("liked");
+    likeButton.textContent = liked ? "💖 Liked" : "👍 Like";
+    localStorage.setItem("liked", liked); // Save state to localStorage
+  });
+});
